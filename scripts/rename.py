@@ -23,18 +23,18 @@ def main():
     raw_dir = data_dir / "1_raw"
     renamed_dir = data_dir / "2_renamed"
     renaming_params = {
-        "scarlet_letter/vol1": (1, "p{:03d}", ()),  # verified
-        "scarlet_letter/vol2": (141, "p{:03d}", ()),  # verified
-        "scarlet_letter/vol3": (281, "p{:03d}", ()),  # verified
-        "scarlet_letter/vol4": (405, "p{:03d}", ()),  # verified
-        "jane_eyre/vol1": (1, "p{:04d}", ()),  # verified
-        "jane_eyre/vol2": (149, "p{:04d}", ()),  # verified
-        "jane_eyre/vol3": (307, "p{:04d}", ()),  # verified
-        "jane_eyre/vol4": (475, "p{:04d}", (569,)),  # verified
-        "jane_eyre/vol5": (577, "p{:04d}", ()),  # verified
-        "jane_eyre/vol6": (755, "p{:04d}", ()),  # verified
-        "jane_eyre/vol7": (893, "p{:04d}", ()),  # verified
-        "jane_eyre/vol8": (1027, "p{:04d}", ()),  # verified
+        "scarlet_letter/vol1": (1, "scarlet_letter_p{:03d}", ()),  # verified
+        "scarlet_letter/vol2": (141, "scarlet_letter_p{:03d}", ()),  # verified
+        "scarlet_letter/vol3": (281, "scarlet_letter_p{:03d}", ()),  # verified
+        "scarlet_letter/vol4": (405, "scarlet_letter_p{:03d}", ()),  # verified
+        "jane_eyre/vol1": (1, "jane_eyre_p{:04d}", ()),  # verified
+        "jane_eyre/vol2": (149, "jane_eyre_p{:04d}", ()),  # verified
+        "jane_eyre/vol3": (307, "jane_eyre_p{:04d}", ()),  # verified
+        "jane_eyre/vol4": (475, "jane_eyre_p{:04d}", (569,)),  # verified
+        "jane_eyre/vol5": (577, "jane_eyre_p{:04d}", ()),  # verified
+        "jane_eyre/vol6": (755, "jane_eyre_p{:04d}", ()),  # verified
+        "jane_eyre/vol7": (893, "jane_eyre_p{:04d}", ()),  # verified
+        "jane_eyre/vol8": (1027, "jane_eyre_p{:04d}", ()),  # verified
     }
     for subdir, (start_page, fmt, missing_pages) in renaming_params.items():
         rename_pages(in_dir=raw_dir / subdir,
