@@ -1,6 +1,7 @@
 import re
 from os import PathLike
 from pathlib import Path
+from typing import Generator, Any
 
 
 def read_text(filename: PathLike):
@@ -62,6 +63,19 @@ class StringForAlignment:
         self.text = re.sub("\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text)
 
 
+def calc_queries_stats(queries_file_names: Generator[Path, Any, Any], vocab_filename: Path):
+    vocabulary = set(read_text(vocab_filename).split())
+    words_freq = {}
+    for q_file_name in queries_file_names:
+        q_file_path = Path(q_file_name)
+        words = read_text(q_file_path).split()
+        words_occurence_freq = len([w for w in words if w in vocabulary]) / len(words) if len(words) > 0 else 0
+        words_freq[q_file_path.stem] = words_occurence_freq
+    with open(str(vocab_filename.parent / (vocab_filename.stem + "_stats.csv")), "w", encoding="UTF-8") as out_file:
+        for page_name, freq in words_freq.items():
+            out_file.write("{}, {}\n".format(page_name, freq))
+
+
 def preprocess_ref():
     in_dir = Path("data/ref/1_gutenberg/")
     one_line_dir = Path("data/ref/2_oneline/")
@@ -104,6 +118,10 @@ def preprocess_queries():
 def main():
     preprocess_queries()
     preprocess_ref()
+    calc_queries_stats(Path("data/4_oneline").rglob("scarlet_letter_*.txt"),
+                       Path("data/ref/4_vocabulary/scarlet_letter.txt"))
+    calc_queries_stats(Path("data/4_oneline").rglob("jane_eyre_*.txt"),
+                       Path("data/ref/4_vocabulary/jane_eyre.txt"))  # TODO reduce hardcoded filenames
 
 
 if __name__ == "__main__":
