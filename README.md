@@ -4,14 +4,14 @@ Tools for handling un-labeled training images for Angelina Braille Reader
 ## setup
 ```shell script
 git clone --recursive https://github.com/braille-systems/brl_data_tools.git
-wget -O data/1_raw.zip http://azuev.ddns.net/~valera/brl_public/1_raw.zip
-gzip -dS .zip data/1_raw.zip
+wget -O data/ref.zip http://azuev.ddns.net/~valera/brl_public/ref.zip && unzip data/ref.zip -d data
+wget -O data/1_raw.zip http://azuev.ddns.net/~valera/brl_public/1_raw.zip && unzip data/1_raw.zip -d data
+wget -O AngelinaReader/weights/model.t7 http://angelina-reader.ovdv.ru/retina_chars_eced60.clr.008
 
 python -m pip install --upgrade pip
 python -m pip install virtualenv
 python -m venv env
 source env/bin/activate # CygWin: source env/Scripts/activate
-wget -O AngelinaReader/weights/model.t7 http://angelina-reader.ovdv.ru/retina_chars_eced60.clr.008
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
@@ -26,4 +26,9 @@ python scripts/crop.py
 ```shell script
 source env/bin/activate # CygWin: source env/Scripts/activate
 python AngelinaReader/run_local.py data/2_renamed data/3_pseudolabeled -l EN -o --save_dev
+```
+
+### pre-processing text files for alignment
+```shell script
+python scripts/preprocess_text.py
 ```
