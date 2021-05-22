@@ -1,16 +1,16 @@
 import re
-from os import PathLike
 from pathlib import Path
 from typing import Generator, Any
 
 
-def read_text(filename: PathLike):
-    with open(filename, encoding="UTF-8") as in_file:
+def read_text(filename: Path):
+    with open(str(filename), encoding="UTF-8") as in_file:
         return "\n".join(in_file.readlines())
 
 
-def write_text(filename: PathLike, text: str):
-    with open(filename, "w", encoding="UTF-8") as out_file:
+def write_text(filename: Path, text: str):
+    filename.parent.mkdir(parents=True, exist_ok=True)
+    with open(str(filename), "w", encoding="UTF-8") as out_file:
         out_file.write(text + "\n")
 
 
@@ -45,7 +45,7 @@ class AlphaNumericString:
         self.text = "".join([ch for (_, ch) in filtered_characters])
         self.indices = [idx for (idx, _) in filtered_characters]
 
-    def dump_vocabulary(self, out_filename: PathLike):
+    def dump_vocabulary(self, out_filename: Path):
         words = sorted(set(self.text.split()))
         write_text(out_filename, "\n".join(words))
 
