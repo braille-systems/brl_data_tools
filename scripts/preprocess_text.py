@@ -41,7 +41,9 @@ class AlphaNumericString:
     """
 
     def __init__(self, one_line_str: OneLineString):
-        self.text = "".join(ch for ch in one_line_str.text if ch.isalnum() or ch == " ")
+        filtered_characters = [(index, ch) for index, ch in enumerate(one_line_str.text) if ch.isalnum() or ch == " "]
+        self.text = "".join([ch for (_, ch) in filtered_characters])
+        self.indices = [idx for (idx, _) in filtered_characters]
 
     def dump_vocabulary(self, out_filename: PathLike):
         words = sorted(set(self.text.split()))
@@ -92,6 +94,9 @@ def preprocess_ref():
 
         write_text(one_line_dir / ref_filename.name, one_line_str.text)
         write_text(alpha_num_dir / ref_filename.name, alpha_num_str.text)
+        write_text(alpha_num_dir / (ref_filename.stem + ".indices.txt"),
+                   " ".join([str(idx) for idx in alpha_num_str.indices]))
+
         alpha_num_str.dump_vocabulary(vocab_dir / ref_filename.name)
         write_text(for_aln_dir / ref_filename.name, for_aln_str.text)
 
