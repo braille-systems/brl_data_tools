@@ -31,4 +31,20 @@ python AngelinaReader/run_local.py data/2_renamed data/3_pseudolabeled -l EN -o 
 ### pre-processing text files for alignment
 ```shell script
 python scripts/preprocess_text.py
+python scripts/find_regions_of_interest.py
+```
+
+## semi-supervised learning
+### setup
+```shell script
+cd AngelinaReader
+git clone --recursive https://github.com/braille-systems/brl_ocr.git
+cd ..
+```
+### naive SSL
+```shell script
+source env/bin/activate # CygWin: source env/Scripts/activate
+python scripts/split_test_train.py
+cd AngelinaReader
+python model/train.py
 ```
