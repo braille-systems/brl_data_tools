@@ -4,6 +4,8 @@ Tools for handling un-labeled training images for Angelina Braille Reader
 ## setup
 ```shell script
 git clone --recursive https://github.com/braille-systems/brl_data_tools.git
+cd brl_data_tools
+mkdir data
 wget -O data/ref.zip http://azuev.ddns.net/~valera/brl_public/ref.zip && unzip data/ref.zip -d data
 wget -O data/1_raw.zip http://azuev.ddns.net/~valera/brl_public/1_raw.zip && unzip data/1_raw.zip -d data
 wget -O AngelinaReader/weights/model.t7 http://angelina-reader.ovdv.ru/retina_chars_eced60.clr.008
@@ -46,5 +48,6 @@ cd ..
 source env/bin/activate # CygWin: source env/Scripts/activate
 python scripts/split_test_train.py
 cd AngelinaReader
+# you may want to tweak `batch_size` in model/params.py
 python model/train.py
 ```

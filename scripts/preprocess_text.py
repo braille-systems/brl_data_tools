@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Generator, Any
+from typing import Generator, Any, Dict
 
 
 def read_text(filename: Path):
@@ -65,7 +65,7 @@ class StringForAlignment:
         self.text = re.sub("\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text)
 
 
-def calc_queries_stats(queries_file_names: Generator[Path, Any, Any], vocab_filename: Path):
+def calc_queries_stats(queries_file_names: Generator[Path, Any, Any], vocab_filename: Path) -> Dict[str, int]:
     vocabulary = set(read_text(vocab_filename).split())
     words_freq = {}
     for q_file_name in queries_file_names:
@@ -73,16 +73,13 @@ def calc_queries_stats(queries_file_names: Generator[Path, Any, Any], vocab_file
         words = read_text(q_file_path).split()
         words_occurence_freq = len([w for w in words if w in vocabulary]) / len(words) if len(words) > 0 else 0
         words_freq[q_file_path.stem] = words_occurence_freq
-    with open(str(vocab_filename.parent / (vocab_filename.stem + "_stats.csv")), "w", encoding="UTF-8") as out_file:
-        for page_name, freq in words_freq.items():
-            out_file.write("{}, {}\n".format(page_name, freq))
+    return words_freq
 
 
-def preprocess_ref():
+def preprocess_ref(vocab_dir: Path):
     in_dir = Path("data/ref/1_gutenberg/")
     one_line_dir = Path("data/ref/2_oneline/")
     alpha_num_dir = Path("data/ref/3_alphanumeric/")
-    vocab_dir = Path("data/ref/4_vocabulary")
     for_aln_dir = Path("data/ref/5_for_alignment")
     for out_dir in (one_line_dir, alpha_num_dir, vocab_dir, for_aln_dir):
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -121,12 +118,16 @@ def preprocess_queries():
 
 
 def main():
+    vocab_dir = Path("data/ref/4_vocabulary")
     preprocess_queries()
-    preprocess_ref()
-    calc_queries_stats(Path("data/4_oneline").rglob("scarlet_letter_*.txt"),
-                       Path("data/ref/4_vocabulary/scarlet_letter.txt"))
-    calc_queries_stats(Path("data/4_oneline").rglob("jane_eyre_*.txt"),
-                       Path("data/ref/4_vocabulary/jane_eyre.txt"))  # TODO reduce hardcoded filenames
+    preprocess_ref(vocab_dir=vocab_dir)
+    words_freq = {}
+    for file_prefix in ("scarlet_letter", "jane_eyre"):
+        words_freq.update(calc_queries_stats(Path("data/5_alphanumeric").rglob(file_prefix + "_*.txt"),
+                                             vocab_dir / "{}.txt".format(file_prefix)))
+    with open(str(vocab_dir / "word_freq_stats.csv"), "w", encoding="UTF-8") as out_file:
+        for page_name, freq in words_freq.items():
+            out_file.write("{}, {}\n".format(page_name, freq))
 
 
 if __name__ == "__main__":
