@@ -62,7 +62,8 @@ class StringForAlignment:
         return StringForAlignment.number_sign + "".join(StringForAlignment.num_to_letters[int(ch)] for ch in number_str)
 
     def __init__(self, one_line_str: OneLineString):
-        self.text = re.sub("\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text)
+        self.text = re.sub("\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text).\
+            replace("«", "“").replace("»", "”")
 
 
 def calc_queries_stats(queries_file_names: Generator[Path, Any, Any], vocab_filename: Path) -> Dict[str, int]:

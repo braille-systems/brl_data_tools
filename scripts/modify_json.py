@@ -12,13 +12,11 @@ def inspect_json(json_file_name: Path, txt_for_aln_file_name: Path):
     formatted_text = text.replace(" ", "")
     formatted_labels = "".join(labels).replace("##", "]")\
         .replace("()", "|")\
-        .replace("XX", "")
+        .replace("XX", "@")
     match = len(formatted_text) == len(formatted_labels)
-    # 3x TODO:
-    # 1. Somehow insert markout signs in text files (from within Angeliona when `save_dev`=True  or merge TXT+JSON)
-    # 2. Find out why in JSON each brace is two braces: ()
-    # 3. Find out why there are some caps signs omitted in TXT
+    # TODO find out why there are some caps signs in TXT missing in JSON (? EN sign); now just filter these pages
     if not match:
+        print(json_file_name.stem)
         print("{} {}".format(len(formatted_text), formatted_text))
         print("{} {}".format(len(formatted_labels), formatted_labels))
     return match
