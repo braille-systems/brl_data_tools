@@ -36,6 +36,12 @@ python scripts/preprocess_text.py
 python scripts/find_regions_of_interest.py
 ```
 
+### performing alignment & calculating statistics
+```shell script
+python scripts/needleman_wunsch.py
+python scripts/postprocess_text.py
+```
+
 ## semi-supervised learning
 ### setup
 ```shell script

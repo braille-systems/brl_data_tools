@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Generator, Any, Dict
+from typing import Generator, Any, Dict, Sequence
 
 
 def read_text(filename: Path):
@@ -57,12 +57,22 @@ class StringForAlignment:
     number_sign = "]"
     num_to_letters = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h", 9: "i", 0: "j"}
 
-    @staticmethod
-    def to_letters(number_str: str) -> str:
-        return StringForAlignment.number_sign + "".join(StringForAlignment.num_to_letters[int(ch)] for ch in number_str)
+    @classmethod
+    def to_letters(cls, number_str: str) -> str:
+        return cls.number_sign + "".join(cls.num_to_letters[int(ch)] for ch in number_str)
+
+    @classmethod
+    def return_digits_to_text(cls, text: str, remove_number_sign: bool) -> str:
+        letters_to_num = {value: key for key, value in cls.num_to_letters.items()}
+
+        def substitute_with_num(letters_str: str):
+            result = "".join(str(letters_to_num[ch]) for ch in letters_str[1:])
+            return result if remove_number_sign else StringForAlignment.number_sign + result
+
+        return re.sub("\][a-j]*", lambda match: substitute_with_num(match.group(0)), text)  # TODO use var `number_sign`
 
     def __init__(self, one_line_str: OneLineString):
-        self.text = re.sub("\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text).\
+        self.text = re.sub("\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text). \
             replace("«", "“").replace("»", "”")
 
 
@@ -75,6 +85,16 @@ def calc_queries_stats(queries_file_names: Generator[Path, Any, Any], vocab_file
         words_occurence_freq = len([w for w in words if w in vocabulary]) / len(words) if len(words) > 0 else 0
         words_freq[q_file_path.stem] = words_occurence_freq
     return words_freq
+
+
+def calc_occurrences(queries_dir: Path, vocab_dir: Path, file_prefixes: Sequence[str], out_file_postfix: str) -> None:
+    words_freq = {}
+    for file_prefix in file_prefixes:
+        words_freq.update(calc_queries_stats(queries_dir.rglob(file_prefix + "_*.txt"),
+                                             vocab_dir / "{}.txt".format(file_prefix)))
+    with open(str(vocab_dir / "word_freq_stats{}.csv".format(out_file_postfix)), "w", encoding="UTF-8") as out_file:
+        for page_name, freq in words_freq.items():
+            out_file.write("{}, {}\n".format(page_name, freq))
 
 
 def preprocess_ref(vocab_dir: Path):
@@ -122,13 +142,8 @@ def main():
     vocab_dir = Path("data/ref/4_vocabulary")
     preprocess_queries()
     preprocess_ref(vocab_dir=vocab_dir)
-    words_freq = {}
-    for file_prefix in ("scarlet_letter", "jane_eyre"):
-        words_freq.update(calc_queries_stats(Path("data/5_alphanumeric").rglob(file_prefix + "_*.txt"),
-                                             vocab_dir / "{}.txt".format(file_prefix)))
-    with open(str(vocab_dir / "word_freq_stats.csv"), "w", encoding="UTF-8") as out_file:
-        for page_name, freq in words_freq.items():
-            out_file.write("{}, {}\n".format(page_name, freq))
+    calc_occurrences(queries_dir=Path("data/5_alphanumeric"), vocab_dir=vocab_dir,
+                     file_prefixes=("scarlet_letter", "jane_eyre"), out_file_postfix="")
 
 
 if __name__ == "__main__":

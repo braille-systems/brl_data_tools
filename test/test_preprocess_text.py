@@ -29,3 +29,6 @@ def test_alphanumeric_string():
 def test_string_for_alignment():
     assert StringForAlignment.to_letters("901") == "]ija"
     assert StringForAlignment(OneLineString("^abc 123 456")).text == "^abc ]abc ]def"
+    assert StringForAlignment.return_digits_to_text("]abc", remove_number_sign=True) == "123"
+    assert StringForAlignment.return_digits_to_text("]ab cd ]ef", remove_number_sign=True) == "12 cd 56"
+    assert StringForAlignment.return_digits_to_text("]ab cd ]efgh.j", remove_number_sign=False) == "]12 cd ]5678.j"
