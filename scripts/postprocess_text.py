@@ -10,7 +10,7 @@ from scripts.needleman_wunsch import InDelSymbols
 
 def create_oneline_alns(out_dir: Path) -> None:
     for aln_filename in Path("data/7_aligned").rglob("*.txt"):
-        ref, _, query = read_text(aln_filename).split("\n")[0:3]
+        ref, query = read_text(aln_filename).split("\n")[0:2]
         query_corrected = []
         for i_char in range(len(ref)):
             if query[i_char] != InDelSymbols.ins and ref[i_char] != InDelSymbols.delet:

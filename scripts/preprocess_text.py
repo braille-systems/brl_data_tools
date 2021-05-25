@@ -3,12 +3,12 @@ from pathlib import Path
 from typing import Generator, Any, Dict, Sequence
 
 
-def read_text(filename: Path):
+def read_text(filename: Path) -> str:
     with open(str(filename), encoding="UTF-8") as in_file:
-        return "\n".join(in_file.readlines())
+        return "".join(in_file.readlines())
 
 
-def write_text(filename: Path, text: str):
+def write_text(filename: Path, text: str) -> None:
     filename.parent.mkdir(parents=True, exist_ok=True)
     with open(str(filename), "w", encoding="UTF-8") as out_file:
         out_file.write(text + "\n")
@@ -25,7 +25,8 @@ class OneLineString:
         # we'll denote capital sign as `^`
         # TODO maybe convert only the first match after space?
         caps_converted_text = re.sub("[A-Z]", lambda ch: "^" + ch.group(0).lower(), no_tabs_text)
-        no_line_numbers_text = re.sub("\[([0-9]|[a-z])*\]", " ", caps_converted_text)
+        no_line_numbers_text = re.sub("\[([0-9]|[a-z])*" + StringForAlignment.number_sign_regex, " ",
+                                      caps_converted_text)
 
         # in Braille, dash & hyphen are the same; a dash is followed by, but not preceded by a space
         space_after_dash_text = re.sub("—", "- ", no_line_numbers_text)
@@ -55,6 +56,7 @@ class StringForAlignment:
     A form of text for alignment. All numbers converted to number sign + letters
     """
     number_sign = "]"
+    number_sign_regex = "\]"
     num_to_letters = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h", 9: "i", 0: "j"}
 
     @classmethod
@@ -69,7 +71,7 @@ class StringForAlignment:
             result = "".join(str(letters_to_num[ch]) for ch in letters_str[1:])
             return result if remove_number_sign else StringForAlignment.number_sign + result
 
-        return re.sub("\][a-j]*", lambda match: substitute_with_num(match.group(0)), text)  # TODO use var `number_sign`
+        return re.sub(cls.number_sign_regex + "[a-j]*", lambda match: substitute_with_num(match.group(0)), text)
 
     def __init__(self, one_line_str: OneLineString):
         self.text = re.sub("\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text). \
