@@ -1,7 +1,15 @@
 # brl_data_tools
 Tools for handling un-labeled training images for Angelina Braille Reader
 
+## Requirements
+
+- Linux Ubuntu or CygWin (other: not tested)
+- Git + Git LFS
+- Python 3.8
+
+
 ## setup
+substitute `python` with your system's Python3.8 command (may be `python3`, `py3`, etc).
 ```shell script
 git clone --recursive https://github.com/braille-systems/brl_data_tools.git
 cd brl_data_tools

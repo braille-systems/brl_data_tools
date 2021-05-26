@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 
 from pathlib import Path
-from typing import List
+from typing import List, Dict
 
 from scripts.preprocess_text import read_text, write_text, OneLineString, AlphaNumericString, calc_occurrences
 from scripts.needleman_wunsch import InDelSymbols
@@ -19,12 +19,12 @@ def create_oneline_alns(out_dir: Path) -> None:
         write_text(out_dir / aln_filename.name, AlphaNumericString(OneLineString("".join(query_corrected))).text)
 
 
-def read_csv_stats(vocab_filename: Path) -> List[float]:
-    result = []
-    with open(str(vocab_filename)) as csvfile:
+def read_csv_stats(stats_file_name: Path) -> Dict[str, float]:
+    result = {}
+    with open(str(stats_file_name)) as csvfile:
         csvreader = csv.reader(csvfile)
         for row in csvreader:
-            result.append(float(row[1].strip()))
+            result[row[0].strip()] = float(row[1].strip())
     return result
 
 
@@ -35,8 +35,8 @@ def main():
     create_oneline_alns(out_dir=aligned_queries_dir)
     calc_occurrences(queries_dir=aligned_queries_dir, vocab_dir=vocab_dir,
                      file_prefixes=("scarlet_letter", "jane_eyre"), out_file_postfix=".aligned")
-    freq_before = read_csv_stats(vocab_dir / "word_freq_stats.csv")
-    freq_after = read_csv_stats(vocab_dir / "word_freq_stats.aligned.csv")
+    freq_before = read_csv_stats(vocab_dir / "word_freq_stats.csv").values()
+    freq_after = read_csv_stats(vocab_dir / "word_freq_stats.aligned.csv").values()
 
     fig, axs = plt.subplots(2)
     fig.suptitle("frequency of occurrence of words in the dictionary")

@@ -10,6 +10,13 @@ def test_oneline_string():
             ("  [123] AaXz  ", " ^aa^xz "),
             ("  [123] \t \n\r AaXz\n\r  ", " ^aa^xz "),
             ("  [123] \t \n\r AaXz\n\r [ivv]123  ", " ^aa^xz 123 "),
+            ("  [123] \t \n\r AaXz\n\r [ivv]123  “‘single-quoted text’”", " ^aa^xz 123 ““single-quoted text””"),
+            ("  [123] \t \n\r AaXz\n\r [ivv]123  “‘single-quoted text’”, a’s, b‘s",
+             " ^aa^xz 123 ““single-quoted text””, a's, b's"),
+            ("  [123] \t \n\r AaXz\n\r [ivv]123  “‘single-quoted text’”, a’s, b‘s &co",
+             " ^aa^xz 123 ““single-quoted text””, a's, b's '&co"),
+            ("  [123] \t \n\r AaXz\n\r [ivv]123  “‘single-quoted text’”, a’s, b‘s &co tête-à-tête",
+             " ^aa^xz 123 ““single-quoted text””, a's, b's '&co tete-a-tete"),
     ):
         assert OneLineString(input_str).text == expected_output
 

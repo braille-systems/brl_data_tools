@@ -24,16 +24,36 @@ class OneLineString:
 
         # we'll denote capital sign as `^`
         # TODO maybe convert only the first match after space?
-        caps_converted_text = re.sub("[A-Z]", lambda ch: "^" + ch.group(0).lower(), no_tabs_text)
+        caps_converted_text = re.sub("[A-Z]", lambda ch: StringForAlignment.caps_sign + ch.group(0).lower(),
+                                     no_tabs_text)
+        single_quotes_converted_text = re.sub(r"([^a-z])‘(.*)’([^a-z])", r"\1“\2”\3", caps_converted_text)
+        apostrope_converted_text = re.sub("[‘’]", "'", single_quotes_converted_text)
         no_line_numbers_text = re.sub("\[([0-9]|[a-z])*" + StringForAlignment.number_sign_regex, " ",
-                                      caps_converted_text)
-
-        # in Braille, dash & hyphen are the same; a dash is followed by, but not preceded by a space
-        space_after_dash_text = re.sub("—", "- ", no_line_numbers_text)
+                                      apostrope_converted_text)
+        dash_converted_text = re.sub("—", "--", no_line_numbers_text)
         # in Braille, dots (…) are three separate dots (...)
-        dots_exploded_text = re.sub("…", "...", space_after_dash_text)
-        whitespace_reduced_text = re.sub(" +", " ", dots_exploded_text)
-        self.text = whitespace_reduced_text
+        dots_exploded_text = re.sub("…", "...", dash_converted_text)
+        # in Jane Eyre ampersand is always preceded by stress (') TODO do not do it in general case or create parameter
+        amp_converted_text = re.sub("&", "'&", dots_exploded_text)
+        whitespace_reduced_text = re.sub(" +", " ", amp_converted_text)
+
+        special_letters_map = {
+            "è": "e",
+            "é": "e",
+            "ê": "e",
+            "ë": "e",
+            "ï": "i",
+            "ä": "a",
+            "â": "a",
+            "à": "a",
+            "ç": "c",
+            "ô": "o",
+            "œ": "ae",
+            "æ": "ae",
+        }
+        text_no_special = "".join(
+            [special_letters_map[ch] if ch in special_letters_map else ch for ch in whitespace_reduced_text])
+        self.text = text_no_special
 
 
 class AlphaNumericString:
@@ -56,7 +76,8 @@ class StringForAlignment:
     A form of text for alignment. All numbers converted to number sign + letters
     """
     number_sign = "]"
-    number_sign_regex = "\]"
+    caps_sign = "^"
+    number_sign_regex = r"\]"
     num_to_letters = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h", 9: "i", 0: "j"}
 
     @classmethod
