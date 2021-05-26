@@ -2,7 +2,7 @@
 
 [![Actions Status](https://github.com/braille-systems/brl_data_tools/workflows/Python%20CI/badge.svg?branch=main)](https://github.com/braille-systems/brl_data_tools/actions)
 [![Code Coverage](https://codecov.io/gh/braille-systems/brl_data_tools/branch/main/graph/badge.svg)](https://codecov.io/gh/braille-systems/brl_data_tools)
-[![CodeFactor](https://www.codefactor.io/repository/github/braille-systems/brl_data_tools/badge)](https://www.codefactor.io/repository//github/braille-systems/brl_data_tools)
+[![CodeFactor](https://www.codefactor.io/repository/github/braille-systems/brl_data_tools/badge)](https://www.codefactor.io/repository/github/braille-systems/brl_data_tools)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Tools for handling un-labeled training images for Angelina Braille Reader
