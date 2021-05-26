@@ -91,24 +91,22 @@ def correct_json(json_content: dict, ref: str, query: str, page_no: int) -> Tupl
         ref, no_is_found = find_page_no(ref=ref, query=query, page_no=page_no)
         if not no_is_found:
             return result_json, JsonCorrectionStatus.no_not_found
+
     indices_to_remove = []
     i_label = 0
+    replacements = {
+        StringForAlignment.number_sign: "##",
+        StringForAlignment.caps_sign: "CC",
+        "“": "«",
+        "”": "»",
+    }
     for q_symbol, ref_symbol in zip(query, ref):
         if q_symbol in (" ", InDelSymbols.delet):
             continue
         if ref_symbol in (InDelSymbols.ins, " "):
             indices_to_remove.append(i_label)
-        elif ref_symbol != q_symbol:
-            new_label = ref_symbol
-            replacements = {
-                StringForAlignment.number_sign: "##",
-                StringForAlignment.caps_sign: "CC",
-                "“": "«",
-                "”": "»",
-            }
-            if ref_symbol in replacements.keys():
-                new_label = replacements[ref_symbol]
-            result_json["shapes"][i_label]["label"] = new_label
+        new_label = replacements[ref_symbol] if ref_symbol in replacements.keys() else ref_symbol
+        result_json["shapes"][i_label]["label"] = new_label
         i_label += 1
     return result_json, JsonCorrectionStatus.success
 

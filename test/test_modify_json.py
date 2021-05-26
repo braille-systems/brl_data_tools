@@ -18,8 +18,8 @@ def test_detect_hyphens():
 def test_correct_json():
     with open("data/modify_json/labels.json") as json_file:
         json_content = json.load(json_file)
-    (ref, query), page_no = read_text(Path("data/modify_json/alignment_p14.txt")).split("\n")[:2], 14
+    (ref, query), page_no = read_text(Path("data/modify_json/alignment_p15.txt")).split("\n")[:2], 15
     corrected_json, status = correct_json(json_content=json_content, ref=ref, query=query, page_no=page_no)
     assert status == JsonCorrectionStatus.success
     assert "".join([shape["label"] if shape["label"] is not None else "■" for shape in corrected_json["shapes"]]) \
-           == "CCb-##14nana"
+           == "CCb-##15nana"
