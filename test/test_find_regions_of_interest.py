@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from scripts.preprocess_text import StringForAlignment, OneLineString, read_text
-from scripts.find_regions_of_intetest import build_ktuple_database, find_regions
+from scripts.find_regions_of_interest import build_ktuple_database, find_regions
 
 
 def test_build_ktuples_database():

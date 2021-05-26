@@ -28,7 +28,7 @@ class OneLineString:
                                      no_tabs_text)
         single_quotes_converted_text = re.sub(r"([^a-z])‘(.*)’([^a-z])", r"\1“\2”\3", caps_converted_text)
         apostrope_converted_text = re.sub("[‘’]", "'", single_quotes_converted_text)
-        no_line_numbers_text = re.sub("\[([0-9]|[a-z])*" + StringForAlignment.number_sign_regex, " ",
+        no_line_numbers_text = re.sub(r"\[([0-9]|[a-z])*" + StringForAlignment.number_sign_regex, " ",
                                       apostrope_converted_text)
         dash_converted_text = re.sub("—", "--", no_line_numbers_text)
         # in Braille, dots (…) are three separate dots (...)
@@ -95,7 +95,7 @@ class StringForAlignment:
         return re.sub(cls.number_sign_regex + "[a-j]*", lambda match: substitute_with_num(match.group(0)), text)
 
     def __init__(self, one_line_str: OneLineString):
-        self.text = re.sub("\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text). \
+        self.text = re.sub(r"\d+", lambda match: StringForAlignment.to_letters(match.group(0)), one_line_str.text). \
             replace("«", "“").replace("»", "”")
 
 

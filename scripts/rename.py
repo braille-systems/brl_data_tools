@@ -19,7 +19,7 @@ def rename_pages(in_dir: Path, out_dir: Path, start_num: int, fmt: str = "p{:04d
 
 
 def main():
-    data_dir = Path("data") # run this script from the root directory of the repository
+    data_dir = Path("data")  # run this script from the root directory of the repository
     raw_dir = data_dir / "1_raw"
     renamed_dir = data_dir / "2_renamed"
     renaming_params = {

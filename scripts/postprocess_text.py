@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 
 from pathlib import Path
-from typing import List, Dict
+from typing import Dict
 
 from scripts.preprocess_text import read_text, write_text, OneLineString, AlphaNumericString, calc_occurrences
 from scripts.needleman_wunsch import InDelSymbols
