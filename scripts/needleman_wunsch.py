@@ -13,12 +13,14 @@ class InDelSymbols:
     dummy = "$"
 
 
-def forward_pass(ref: str, query: str) -> Tuple[np.array, np.array]:
+def forward_pass(ref: str, query: str, penalize_first_dels: bool = False) -> Tuple[np.array, np.array]:
     """
     Forward pass of modified Needleman-Wuhsch algorithm.
     assuming `ref`, `query` start with some dummy symbol
     """
     scores = np.zeros((len(query), len(ref)))
+    if penalize_first_dels:
+        scores[0, :] = -np.arange(len(ref))
     scores[:, 0] = -np.arange(len(query))
     path = np.full((len(query), len(ref)), None)
     for i_row in range(1, len(query)):

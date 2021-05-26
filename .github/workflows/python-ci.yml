@@ -34,7 +34,7 @@ jobs:
       - name: Test with pytest & calculate coverage
         run: |
           cd test
-          python -m pytest --cov=../scripts/ . && mv .coverage ..
+          python -m pytest -m "not slow" --cov=../scripts/ . && mv .coverage ..
           cd ..
           coverage xml -o $OUT_PATH/coverage/coverage.xml
         if: success() || failure() # run even if the previous step fails

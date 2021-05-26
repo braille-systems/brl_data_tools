@@ -1,10 +1,16 @@
+from pathlib import Path
+
 import numpy as np
 import matplotlib.pyplot as plt
+import pytest
 
+from scripts import read_text
 from scripts.needleman_wunsch import forward_pass, backtrack, InDelSymbols
 
 ref = "$caribbean"
 query = "$bribe"
+out_dir = Path("data/out/test_needleman_wunsch")
+out_dir.mkdir(parents=True, exist_ok=True)
 
 
 def test_forward_pass():
@@ -31,7 +37,25 @@ def test_forward_pass():
             ax.text(j, i, scores[i, j],
                     ha="center", va="center", color="w")
     fig.tight_layout()
-    plt.savefig("data/out/needlemah_wunsch.png")
+    plt.savefig(str(out_dir / "simple.png"))
+
+
+@pytest.mark.slow
+def test_forward_pass_big():
+    for penalize_first_dels in (True, False):
+        scores, _ = forward_pass(
+            ref=read_text(Path("data/ref/scarlet_letter_p311.ref.txt")),
+            query=read_text(Path("data/queries/scarlet_letter_p311.query.txt")),
+            # ref=read_text(Path("data/ref/jane_eyre_p0010.ref.txt")),
+            # query=read_text(Path("data/queries/jane_eyre_p0010.query.txt")),
+            penalize_first_dels=penalize_first_dels)
+        plt.figure()
+        plt.imshow(scores, cmap='hot', interpolation='nearest')
+        plt.savefig(str(out_dir / "big_penalize{}.png".format(penalize_first_dels)))
+
+        plt.figure()
+        plt.imshow(scores[:100, :500], cmap="hot", interpolation="nearest")
+        plt.savefig(str(out_dir / "big_penalize_0-100_0-500{}.png".format(penalize_first_dels)))
 
 
 def test_backtrack():
