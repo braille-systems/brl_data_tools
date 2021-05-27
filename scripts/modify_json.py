@@ -108,6 +108,8 @@ def correct_json(json_content: dict, ref: str, query: str, page_no: int) -> Tupl
         new_label = replacements[ref_symbol] if ref_symbol in replacements.keys() else ref_symbol
         result_json["shapes"][i_label]["label"] = new_label
         i_label += 1
+    for i_lbl in reversed(indices_to_remove):
+        result_json["shapes"].pop(i_lbl)
     return result_json, JsonCorrectionStatus.success
 
 
