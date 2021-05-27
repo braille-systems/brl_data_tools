@@ -24,8 +24,8 @@
 \usepackage{caption} % caption setup
 \usepackage{subcaption} % captions for subfigures
 \usepackage{color}
-\usepackage[backend=biber, style=numeric, sorting=none, block=space]{biblatex}
-\bibliography{bibliography}
+\usepackage[backend=biber, bibstyle=gost-numeric, sorting=none, block=space]{biblatex}
+\addbibresource{bibliography.bib}
 
 
 % styling
@@ -48,6 +48,6 @@
 \subfile{parts/intro}
 
 \newpage
-\printbibliography
+\printbibliography[heading=bibintoc, title={Список использованных источников}]
 
 \end{document}
