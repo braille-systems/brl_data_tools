@@ -34,13 +34,14 @@ python -m pip install -r requirements.txt
 ## processing data
 ### renaming and cropping
 ```shell script
+export PYTHONPATH=.
+source env/bin/activate # CygWin: source env/Scripts/activate
 python scripts/rename.py
 python scripts/crop.py
 ```
 
 ### pseudolabeling
 ```shell script
-source env/bin/activate # CygWin: source env/Scripts/activate
 python AngelinaReader/run_local.py data/2_renamed data/3_pseudolabeled -l EN -o --save_dev
 ```
 
@@ -54,6 +55,11 @@ python scripts/find_regions_of_interest.py
 ```shell script
 python scripts/needleman_wunsch.py
 python scripts/postprocess_text.py
+```
+
+### saving not corrected, but filtered pseudo-labeled samples
+```shell script
+python scripts/filter_by_freq.py
 ```
 
 ## semi-supervised learning

@@ -19,6 +19,7 @@ def main():
           test_part=.1  # we leave 10% of data for test
           )
     split(data_dir=Path("data/9a_corrected"), test_part=.1)
+    split(data_dir=Path("data/10_filtered_no_correction"), test_part=0)
 
 
 if __name__ == "__main__":
