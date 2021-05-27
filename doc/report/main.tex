@@ -39,6 +39,10 @@
 \graphicspath{{./img/}}
 \newcommand{\myPictWidth}{\textwidth}
 \newcommand{\phm}{\phantom{-}}
+\newcommand{\nonumsection}[1]{
+    \section*{#1}
+    \addcontentsline{toc}{section}{\protect\numberline{}#1}%
+}
 
 \begin{document}
 \subfile{titlepage}
@@ -48,6 +52,7 @@
 \subfile{parts/intro}
 
 \newpage
-\printbibliography[heading=bibintoc, title={Список использованных источников}]
+\addcontentsline{toc}{section}{\protect\numberline{}Список использованных источников}
+\printbibliography[title={Список использованных источников}]
 
 \end{document}
