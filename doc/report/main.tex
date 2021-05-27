@@ -13,7 +13,6 @@
 \usepackage{dsfont}
 
 % utilities
-\usepackage{systeme} % systems of equations
 \usepackage{mathtools} % xRightarrow, xrightleftharpoons, etc
 \usepackage{array} % utils for tables
 \usepackage{makecell} % multirow for tables
@@ -25,6 +24,8 @@
 \usepackage{caption} % caption setup
 \usepackage{subcaption} % captions for subfigures
 \usepackage{color}
+\usepackage[backend=biber, style=numeric, sorting=none, block=space]{biblatex}
+\bibliography{bibliography}
 
 
 % styling
@@ -41,5 +42,12 @@
 
 \begin{document}
 \subfile{titlepage}
+% TODO реферат + abstract
+\tableofcontents
+\newpage
+\subfile{parts/intro}
+
+\newpage
+\printbibliography
 
 \end{document}
