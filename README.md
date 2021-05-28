@@ -59,7 +59,9 @@ python scripts/postprocess_text.py
 
 ### saving not corrected, but filtered pseudo-labeled samples
 ```shell script
+python scripts/split_test_train.py
 python scripts/filter_by_freq.py
+python scripts/split_test_train.py
 ```
 
 ## semi-supervised learning
