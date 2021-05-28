@@ -96,7 +96,6 @@ def correct_json(json_content: dict, ref: str, query: str, page_no: int) -> Tupl
     i_label = 0
     replacements = {
         StringForAlignment.number_sign: "##",
-        StringForAlignment.caps_sign: "CC",
         "“": "«",
         "”": "»",
     }
