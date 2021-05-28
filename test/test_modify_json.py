@@ -22,4 +22,4 @@ def test_correct_json():
     corrected_json, status = correct_json(json_content=json_content, ref=ref, query=query, page_no=page_no)
     assert status == JsonCorrectionStatus.success
     assert "".join([shape["label"] if shape["label"] is not None else "■" for shape in corrected_json["shapes"]]) \
-           == "CCb-##15nana"
+           == "^b-##15nana"
