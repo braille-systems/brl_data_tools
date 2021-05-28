@@ -26,6 +26,14 @@
 \usepackage{color}
 \usepackage[backend=biber, bibstyle=gost-numeric, sorting=none, block=space]{biblatex}
 \addbibresource{bibliography.bib}
+\DeclareFieldFormat[inproceedings]{pagetotal}{\mkpagetotal[bookpagination]{#1}}
+\renewbibmacro*{chapter+pages}{%
+    \printfield{note}%
+    \setunit{\bibpagespunct -}%
+    \printfield{pagetotal}%
+    \setunit{\bibpagespunct}%
+    \printfield{pages}%
+    \newunit}
 
 
 % styling
@@ -34,6 +42,9 @@
 \floatstyle{plaintop} % force caption on top
 \usepackage{enumitem} % itemize and enumerate with [noitemsep]
 \setlength{\parindent}{0pt} % no indents!
+
+\usepackage{chngcntr}
+\counterwithin{figure}{section} % per section figure numbering
 
 % misc
 \graphicspath{{./img/}}
@@ -46,7 +57,7 @@
 
 \begin{document}
 \subfile{titlepage}
-% TODO реферат + abstract
+% TODO реферат + abstract (no page numbering)
 \tableofcontents
 \newpage
 \subfile{parts/intro}
