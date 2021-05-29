@@ -15,15 +15,20 @@ Tools for handling un-labeled training images for Angelina Braille Reader
 
 
 ## setup
+
 substitute `python` with your system's Python3.8 command (may be `python3`, `py3`, etc).
+
+Get the source code and pre-trained weights for the neural net:
 ```shell script
 git clone --recursive https://github.com/braille-systems/brl_data_tools.git
 cd brl_data_tools
-mkdir data
-wget -O data/ref.zip http://azuev.ddns.net/~valera/brl_public/ref.zip && unzip data/ref.zip -d data
-wget -O data/1_raw.zip http://azuev.ddns.net/~valera/brl_public/1_raw.zip && unzip data/1_raw.zip -d data
 wget -O AngelinaReader/weights/model.t7 http://angelina-reader.ovdv.ru/retina_chars_eced60.clr.008
+mkdir data
+```
+Then download data from Kaggle (https://www.kaggle.com/valeryzuev/unlabeled-braille-photos) and unzip to `data` directory that you've just created.
 
+Then set up Python virtual environment:
+```shell script
 python -m pip install --upgrade pip
 python -m pip install virtualenv
 python -m venv env
