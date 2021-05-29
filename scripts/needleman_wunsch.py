@@ -1,3 +1,4 @@
+from enum import Enum
 from pathlib import Path
 from typing import Tuple
 
@@ -6,7 +7,7 @@ import numpy as np
 from scripts.preprocess_text import read_text, write_text
 
 
-class InDelSymbols:
+class InDelSymbols(Enum):
     ins = "▲"
     delet = "◂"
     match = "⊙"
