@@ -1,9 +1,12 @@
 % !TeX spellcheck = en_US
-% !TeX program = lualatex
+% !TeX program = xelatex
 
 \documentclass[a4paper,12pt]{article}
 \usepackage[T2A, T1]{fontenc} % russian
 \usepackage[english, russian]{babel} % russian
+
+\usepackage{setspace} % set space between lines
+% `setspace` moved from `styling`: https://tex.stackexchange.com/a/577582
 
 % fonts
 \usepackage{fontspec} % different fonts
@@ -18,7 +21,7 @@
 \usepackage{multirow} % multirow for tables
 \usepackage{makecell} % utils for tables formatting
 \usepackage{subfiles}
-\usepackage{hyperref}
+\usepackage[hyperfootnotes]{hyperref}
 \hypersetup{pdfstartview=FitH,  linkcolor=blue, urlcolor=blue, colorlinks=true}
 \usepackage{framed} % advanced frames, boxes
 \usepackage{graphicx}
@@ -51,7 +54,6 @@
 
 
 % styling
-\usepackage{setspace} % set space between lines
 \usepackage{float} % force pictures position
 \floatstyle{plaintop} % force caption on top
 \usepackage{enumitem} % itemize and enumerate with [noitemsep]
@@ -59,6 +61,7 @@
 
 \usepackage{chngcntr}
 \counterwithin{figure}{section} % per section figure numbering
+\counterwithin{table}{section}
 
 % misc
 \graphicspath{{./img/}}
