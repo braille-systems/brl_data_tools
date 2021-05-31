@@ -21,9 +21,11 @@
 
 \subsection{Обучение нейронной сети}
 
-Произведено 6 запусков процесса обучения нейронной сети: 3 раза с обучающим набором AngelinaDataset + DSBI и 3 раза с расширенным набором AngelinaDataset + DSBI + данные с псевдометками.
-Результаты сравнения качества моделей представлены в табл. \ref{table:validate_results}.
-% TODO formulas: write about how the metrics are calculated
+Произведено 6 запусков процесса обучения нейронной сети по 300 итераций: 3 раза с обучающим набором AngelinaDataset + DSBI и 3 раза с расширенным набором AngelinaDataset + DSBI + данные с исправленными псевдометками.
+Используются только те страницы с псевдометками, в которых после исправления не встречаются слова, отсутствующие в референсной строке (1164 страницы, разделённые на тренировочную и валидационную выборку в пропорции 9:1).
+Результаты сравнения качества моделей на валидационных, т. е. не используемых при обучении, долях выборок представлены в табл. \ref{table:validate_results}.
+% TODO formulas: write about how the metrics are calculated, loss function
+% TODO results: add SSL without labels correction
 
 % latex table generated in R 4.0.5 by xtable 1.8-4 package
 % Sat May 29 22:42:56 2021

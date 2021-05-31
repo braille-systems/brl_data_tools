@@ -50,6 +50,7 @@
 \end{enumerate}
 
 \subsection{Обзор существующих решений}
+% TODO write a bit about SSL, maybe cite some articles (? at least IOvo's)
 \subsubsection{Подходы к распознаванию}
 Программы распознавания шрифта Брайля разрабатываются начиная с конца XIX века.
 В первую очередь они предназначены для брайлевских сканеров, при использовании которых строки на фотографии находятся на параллельных прямых.
@@ -71,7 +72,7 @@
 Особый интерес представляют алгоритмы, основанные на нейронных сетях UNet \cite{li2020braunet} и RetinaNet \cite{ovodov2020, ovodov2021}.
 В них предлагается вместо поиска строк или точек находить на изображении шеститочечные брайлевские символы, которые затем складываются в строки.
 Это позволяет успешно обрабатывать даже те фотографии, где лист изогнут или помят.
-Исходный код программы AngelinaReader, созданной автором \cite{ovodov2020, ovodov2021}, находится в открытом доступе\footnote{\href{https://github.com/IlyaOvodov/AngelinaReader}{github.com/IlyaOvodov/AngelinaReader}}
+Исходный код программы AngelinaReader, созданной автором \cite{ovodov2020, ovodov2021}, находится в открытом доступе\footnote{\href{https://github.com/IlyaOvodov/AngelinaReader}{github.com/IlyaOvodov/AngelinaReader}}.
 
 В статье \cite{ortoncelli2021} также описывается способ постобработки распознанных текстов, который позволяет уменьшить число ошибок распознавания.
 
