@@ -13,13 +13,15 @@ class InDelSymbols:
     dummy = "$"
 
 
-def forward_pass(ref: str, query: str, penalize_first_dels: bool = False) -> Tuple[np.array, np.array]:
+def forward_pass(ref: str, query: str, penalize_tail_dels: bool = False,
+                 del_penalty: int = 2) -> Tuple[np.array, np.array]:
     """
     Forward pass of modified Needleman-Wuhsch algorithm.
     assuming `ref`, `query` start with some dummy symbol
     """
+
     scores = np.zeros((len(query), len(ref)))
-    if penalize_first_dels:
+    if penalize_tail_dels:
         scores[0, :] = -np.arange(len(ref))
     scores[:, 0] = -np.arange(len(query))
     path = np.full((len(query), len(ref)), None)
@@ -28,7 +30,7 @@ def forward_pass(ref: str, query: str, penalize_first_dels: bool = False) -> Tup
             match_score = scores[i_row - 1, i_col - 1] + (1 if ref[i_col] == query[i_row] else -1)
             del_score = scores[i_row, i_col - 1]
             if i_row != len(query) - 1:
-                del_score -= 1
+                del_score -= 1 if penalize_tail_dels else del_penalty
             in_score = scores[i_row - 1, i_col] - 1
             scores[i_row, i_col] = max(match_score, in_score, del_score)
             if match_score == scores[i_row, i_col]:
