@@ -74,7 +74,7 @@ def test_backtrack():
     assert query_aligned == "bri" + InDelSymbols.delet + "be"
     assert score == 2
 
-    ref_lupus, query_lupus = "$homo homini lupus est", "$homoni lupus"
+    ref_lupus, query_lupus = "$homo homini lupus est", "$homhoni lupus"
     for penalize in (True, False):
         scores, path = forward_pass(ref=ref_lupus, query=query_lupus, penalize_first_dels=penalize)
         ref_aligned, query_aligned, score = backtrack(scores=scores, path=path, ref=ref_lupus, query=query_lupus)
