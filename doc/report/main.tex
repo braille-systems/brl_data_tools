@@ -1,0 +1,95 @@
+% !TeX spellcheck = en_US
+% !TeX program = xelatex
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[T2A, T1]{fontenc} % russian
+\usepackage[english, russian]{babel} % russian
+
+\usepackage{setspace} % set space between lines
+% `setspace` moved from `styling`: https://tex.stackexchange.com/a/577582
+
+% fonts
+\usepackage{fontspec} % different fonts
+\setmainfont{Times New Roman}
+\usepackage{amsmath}
+\usepackage{amssymb} %common math symbols
+\usepackage{dsfont}
+
+% utilities
+\usepackage{mathtools} % xRightarrow, xrightleftharpoons, etc
+\usepackage{array} % utils for tables
+\usepackage{multirow} % multirow for tables
+\usepackage{makecell} % utils for tables formatting
+\usepackage{subfiles}
+\usepackage[hyperfootnotes]{hyperref}
+\hypersetup{pdfstartview=FitH,  linkcolor=blue, urlcolor=blue, colorlinks=true}
+\usepackage{framed} % advanced frames, boxes
+\usepackage{graphicx}
+\usepackage{caption} % caption setup
+\usepackage{subcaption} % captions for subfigures
+\usepackage{color}
+\usepackage{listings} % code chunks (with UTF-8 characters support)
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\lstset{language=Python,
+    basicstyle=\small\ttfamily,
+    stringstyle=\color{dkgreen},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    tabsize=2,
+    breaklines=true,
+    numbers=left,
+    columns=fullflexible
+}
+
+\usepackage[backend=biber, bibstyle=gost-numeric, sorting=none, block=space]{biblatex}
+\addbibresource{bibliography.bib}
+\DeclareFieldFormat[inproceedings]{pagetotal}{\mkpagetotal[bookpagination]{#1}}
+\renewbibmacro*{chapter+pages}{%
+    \printfield{note}%
+    \setunit{\bibpagespunct -}%
+    \printfield{pagetotal}%
+    \setunit{\bibpagespunct}%
+    \printfield{pages}%
+    \newunit}
+
+
+% styling
+\usepackage{float} % force pictures position
+\floatstyle{plaintop} % force caption on top
+\usepackage{enumitem} % itemize and enumerate with [noitemsep]
+\setlength{\parindent}{0pt} % no indents!
+
+\usepackage{chngcntr}
+\counterwithin{figure}{section} % per section figure numbering
+\counterwithin{table}{section}
+
+% misc
+\graphicspath{{./img/}}
+\newcommand{\myPictWidth}{\textwidth}
+\newcommand{\phm}{\phantom{-}}
+\newcommand{\nonumsection}[1]{
+    \section*{#1}
+    \addcontentsline{toc}{section}{\protect\numberline{}#1}%
+}
+
+\begin{document}
+\subfile{titlepage}
+% TODO реферат + abstract (no page numbering)
+\tableofcontents
+\newpage
+\subfile{parts/intro}
+\subfile{parts/problem}
+\subfile{parts/pseudolabeling}
+\subfile{parts/code}
+\subfile{parts/experiments}
+\subfile{parts/results}
+\subfile{conclusion}
+
+\newpage
+\addcontentsline{toc}{section}{\protect\numberline{}Список использованных источников}
+\printbibliography[title={Список использованных источников}]
+
+\subfile{parts/appendix}
+
+
+\end{document}

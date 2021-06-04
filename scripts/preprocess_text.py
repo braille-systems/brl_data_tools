@@ -150,6 +150,7 @@ def preprocess_queries():
     for out_dir in (one_line_dir, alpha_num_dir, for_aln_dir):
         out_dir.mkdir(parents=True, exist_ok=True)
 
+    sum_len = 0
     for query_filename in in_dir.rglob("*.marked.txt"):
         query_path = Path(query_filename)
         one_line_str = OneLineString(read_text(query_path))
@@ -159,6 +160,8 @@ def preprocess_queries():
         write_text(one_line_dir / query_filename.name, one_line_str.text)
         write_text(alpha_num_dir / query_filename.name, alpha_num_str.text)
         write_text(for_aln_dir / query_filename.name.replace(".marked", ".query"), for_aln_str.text)
+        sum_len += len(one_line_str.text.strip())
+    print("total number of recognized characters: {}".format(sum_len))
 
 
 def main():

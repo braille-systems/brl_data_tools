@@ -1,5 +1,6 @@
 import csv
 import matplotlib.pyplot as plt
+import numpy as np
 
 from pathlib import Path
 from typing import Dict
@@ -41,11 +42,12 @@ def main():
     fig, axs = plt.subplots(2)
     fig.suptitle("frequency of occurrence of words in the dictionary")
     for i_plot, (freq, title) in enumerate(((freq_before, "before correction"), (freq_after, "after correction"))):
-        axs[i_plot].violinplot(freq, showmedians=True, vert=False)
-        axs[i_plot].scatter(freq, [1 for _ in range(len(freq))], c="black")
+        axs[i_plot].violinplot(freq, showmedians=True, showextrema=False, vert=False)
+        axs[i_plot].scatter(freq, [1 for _ in range(len(freq))], c="black", s=5)
         axs[i_plot].set(ylabel=title, yticks=[])
+        print("mean of frequencies ({}): {}".format(title, np.mean(list(freq))))
     plt.yticks([])
-    plt.show()
+    plt.savefig(str(vocab_dir / "frequencies.png"), dpi=1000)
 
 
 if __name__ == "__main__":
