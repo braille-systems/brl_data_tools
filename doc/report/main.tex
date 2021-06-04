@@ -16,6 +16,7 @@
 \usepackage{dsfont}
 
 % utilities
+\usepackage{amsthm} % theorems with proofs
 \usepackage{mathtools} % xRightarrow, xrightleftharpoons, etc
 \usepackage{array} % utils for tables
 \usepackage{multirow} % multirow for tables
@@ -62,6 +63,7 @@
 \usepackage{chngcntr}
 \counterwithin{figure}{section} % per section figure numbering
 \counterwithin{table}{section}
+\counterwithin{equation}{section}
 
 % misc
 \graphicspath{{./img/}}
@@ -71,6 +73,8 @@
     \section*{#1}
     \addcontentsline{toc}{section}{\protect\numberline{}#1}%
 }
+\newtheorem{statement}{Утверждение}
+\counterwithin{statement}{section}
 
 \begin{document}
 \subfile{titlepage}
