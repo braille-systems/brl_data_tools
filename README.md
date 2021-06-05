@@ -60,11 +60,12 @@ python scripts/find_regions_of_interest.py
 ```shell script
 python scripts/needleman_wunsch.py
 python scripts/postprocess_text.py
+python scripts/modify_json.py
+python scripts/split_test_train.py
 ```
 
 ### saving not corrected, but filtered pseudo-labeled samples
 ```shell script
-python scripts/split_test_train.py
 python scripts/filter_by_freq.py
 python scripts/split_test_train.py
 ```
