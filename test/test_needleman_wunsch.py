@@ -28,7 +28,7 @@ def test_forward_pass():
     print(path)
 
     for penalize_tail_dels in (True, False):
-        scores, path = forward_pass(ref=ref, query=query, penalize_tail_dels=penalize_tail_dels)
+        scores, path = forward_pass(ref=ref, query=query, penalize_tail_dels=penalize_tail_dels, del_penalty=2)
         fig, ax = plt.subplots()
         ax.imshow(scores)
         ax.set_xticks(np.arange(len(ref)))

@@ -14,7 +14,7 @@ class InDelSymbols:
 
 
 def forward_pass(ref: str, query: str, penalize_tail_dels: bool = False,
-                 del_penalty: int = 2) -> Tuple[np.array, np.array]:
+                 del_penalty: int = 1) -> Tuple[np.array, np.array]:
     """
     Forward pass of modified Needleman-Wuhsch algorithm.
     assuming `ref`, `query` start with some dummy symbol
