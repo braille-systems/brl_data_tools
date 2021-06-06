@@ -1,5 +1,6 @@
 -r AngelinaReader/requirements.txt
 opencv-python==4.5.2.52
+pyenchant==3.2.0
 pytest==6.2.4
 matplotlib==3.2.2
 flake8==3.9.2

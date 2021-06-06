@@ -62,6 +62,7 @@ python scripts/needleman_wunsch.py
 python scripts/postprocess_text.py
 python scripts/modify_json.py
 python scripts/split_test_train.py
+python scripts/calc_statistics_filtered.py
 ```
 
 ### saving not corrected, but filtered pseudo-labeled samples

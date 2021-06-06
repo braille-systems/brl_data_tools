@@ -1,9 +1,9 @@
 import copy
 import json
 import re
+import shutil
 from enum import Enum
 from pathlib import Path
-from shutil import copyfile
 from typing import Tuple
 
 from scripts.preprocess_text import read_text, StringForAlignment, write_text
@@ -117,10 +117,12 @@ def main():
     txt_dir = Path("data/6_for_alignment")
     aln_dir = Path("data/7_aligned")
     result_dir = Path("data/9a_corrected")
+    result_aln_dir = Path("data/9a_corrected_alns")
     rejected_dir = Path("data/9b_rejected")
-    result_dir.mkdir(parents=True, exist_ok=True)
-    rejected_dir.mkdir(parents=True, exist_ok=True)
     stats_file_name = Path("data/ref/4_vocabulary/word_freq_stats.aligned.csv")
+
+    for out_dir in (result_dir, result_aln_dir, rejected_dir):
+        out_dir.mkdir(parents=True, exist_ok=True)
 
     # inspect jsons
     n_matches = n_mismatches = 0
@@ -150,7 +152,9 @@ def main():
         write_text(out_dir / json_file_name.name, json.dumps(new_json_content, indent=4, sort_keys=True))
 
         jpg_file_name = json_file_name.with_suffix(".jpg")
-        copyfile(jpg_file_name, out_dir / jpg_file_name.name)
+        shutil.copyfile(str(jpg_file_name), str(out_dir / jpg_file_name.name))
+        if status == JsonCorrectionStatus.success:
+            shutil.copy(str(aln_file_name), str(result_aln_dir))
 
 
 if __name__ == "__main__":
