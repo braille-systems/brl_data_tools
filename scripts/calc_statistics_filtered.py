@@ -17,6 +17,8 @@ class TextStats:
     n_word_errs: int = 0  # real world errs
     n_punctuation_errs: int = 0  # number of words with punctuation errors only
     n_spelling_errs: int = 0  # non-word errors
+    n_skipped_spaces: int = 0
+    n_added_spaces: int = 0
 
     def __add__(self, other: "TextStats") -> "TextStats":
         return TextStats(
@@ -26,10 +28,12 @@ class TextStats:
             self.n_word_errs + other.n_word_errs,
             self.n_punctuation_errs + other.n_punctuation_errs,
             self.n_spelling_errs + other.n_spelling_errs,
+            self.n_skipped_spaces + other.n_skipped_spaces,
+            self.n_added_spaces + other.n_added_spaces,
         )
 
 
-def calc_non_word_errs(ref: str, query: str, vocab: Set[str], dic: enchant.Dict) -> TextStats:
+def calc_per_word_errs(ref: str, query: str, vocab: Set[str], dic: enchant.Dict) -> TextStats:
     i_char = i_start_word = 0
     stats = TextStats([])
 
@@ -38,12 +42,19 @@ def calc_non_word_errs(ref: str, query: str, vocab: Set[str], dic: enchant.Dict)
             word_ref = ref[i_start_word:i_char]
             word_query = query[i_start_word:i_char]
             word_ref_alnum = AlphaNumericString(OneLineString(word_ref)).text
+
             word_query_alnum = AlphaNumericString(OneLineString(word_query)).text.replace(" ", "")
             if word_ref_alnum in vocab:
                 stats.n_words += 1
 
+                if query[i_char].isalpha():
+                    stats.n_skipped_spaces += 1
+                if " " in word_query:
+                    stats.n_added_spaces += 1
+
                 if word_query == word_ref:
                     stats.n_correct_words += 1
+
                 elif word_ref_alnum == word_query_alnum:
                     stats.n_punctuation_errs += 1
                 elif not len(word_query_alnum) or dic.check(word_query_alnum):
@@ -63,15 +74,14 @@ def calc_non_word_errs(ref: str, query: str, vocab: Set[str], dic: enchant.Dict)
 def main():
     filtered_alns_dir = Path("data/9a_corrected_alns")
     vocab_dir = Path("data/ref/4_vocabulary")
-
     vocabs = {vocab_filename.stem: set(read_text(vocab_filename).split()) for vocab_filename in
               vocab_dir.rglob("*.txt")}
     dic = enchant.Dict("en_US")
 
     stats = TextStats([])
     for aln_file_name in filtered_alns_dir.rglob("*.txt"):
-        ref, query = read_text(aln_file_name).strip().split("\n")[:2]
-        stats += calc_non_word_errs(ref=ref, query=query,
+        ref, query = read_text(aln_file_name).split("\n")[:2]
+        stats += calc_per_word_errs(ref=ref, query=query,
                                     vocab=vocabs[re.sub(r"_p[0-9]+", "", aln_file_name.stem)], dic=dic)
     pprint(sorted(stats.word_errs))
     stats.word_errs = []
