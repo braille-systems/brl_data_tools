@@ -1,0 +1,67 @@
+\documentclass{main.tex}[subfiles]
+\begin{document}
+\thispagestyle{empty}
+\section*{РЕФЕРАТ}
+
+На \pageref*{LastPage} стр., 8 рисунков, 2 таблицы.
+
+КЛЮЧЕВЫЕ СЛОВА: ОПТИЧЕСКОЕ РАСПОЗНАВАНИЕ СИМВОЛОВ, СВЁРТОЧНАЯ НЕЙРОННАЯ СЕТЬ, ПОЛУКОНТРОЛИРУЕМОЕ МАШИННОЕ ОБУЧЕНИЕ, ВЫРАВНИВАНИЕ ПОСЛЕДОВАТЕЛЬНОСТЕЙ, ШРИФТ БРАЙЛЯ.
+
+Тема работы -- <<Применение полуконтролируемого машинного обучения к задаче обнаружения символов Брайля на фотоснимках>>.
+
+В работе рассмотрена задача распознавания символов шрифта Брайля на изображениях; предложен способ улучшения качества работы алгоритмов машинного обучения, решающих эту задачу, основанный на использовании больших объёмов фотографий без аннотаций (т.е. на которых неизвестно расположение брайлевских букв).
+
+Задачи, решённые в рамках исследования:
+\begin{enumerate}[noitemsep]
+    \item Изучение задачи распознавания шрифта Брайля, её особенностей по сравнению с распознаванием обычного текста, существующих методов решения и наборов тренировочных данных.
+    \item Разработка схемы улучшения алгоритма машинного обучения, уже обученного на данных с аннотациями, с помощью данных без аннотаций.
+    \item Сбор данных -- фотографий текста, напечатанного шрифтом Брайля.
+    \item Применение разработанной схемы и полученных данных к одному из известных ранее алгоритмов распознавания и оценка эффективности этой схемы.
+\end{enumerate}
+
+В работе используется и дорабатывается программа распознавания Angelina Braille Reader, написанная на языке Python3 и основанная на архитектуре Retina\-Net и изначально обученная на размеченном наборе из 300 фотографий.
+Разработан и реализован на языке Python3 алгоритм исправления меток, полученных в результате распознавания печатных изданий, с помощью выравнивания распознанного текста и исходного электронного текста издания.
+Получен набор данных (1731 фотография), к которому применён созданный алгоритм.
+Книги, фотографии которых вошли в созданный набор данных, предоставлены Государственной библиотекой для слепых и слабовидящих г. Санкт-Петербурга.
+Методическое консультирование оказывали преподаватели СПб ГБУ <<Центр медико-социальной реабилитации инвалидов по зрению>>.
+
+Как показал эксперимент, исправление меток позволяет дообучить нейронную сеть на новых данных, улучшив распознавание печатного текста.
+
+Спроектированный метод может быть применён к любому алгоритму распознавания шрифта Брайля, основанному на машинном обучении.
+Производимые при этом выравнивания текстов позволяют провести статистический анализ ошибок алгоритма, необходимый для разработки алгоритмов пост-обработки и исправления распознанных знаков.
+
+\newpage
+\thispagestyle{empty}
+\section*{ABSTRACT}
+
+\pageref*{LastPage} pp., 8 figures, 2 tables.
+
+KEYWORDS: OPTICAL CHARACTER RECOGNITION, CONVOLUTIONAL\\
+\noindent NEU\-RAL NETWORK, SEMI-SUPERVISED MACHINE LEARNING, SE\-QUENCE ALIGN\-MENT, BRAILLE.
+
+The subject of this work is "Semi-supervised learning for optical Braille recog\-ni\-ti\-on".
+
+This study explores the problem of image-based Braille recognition; a data-driven approach is proposed to improve existing machine learning algorithms that solve this problem.
+The aforementioned approach utilizes large amounts of unlabeled pictures with printed Braille and their source texts, aligning the original and recognized text.
+
+During the elaboration of the problem, the following tasks were completed:
+\begin{enumerate}[noitemsep]
+    \item Studying the problem of optical Braille recognition, its differences from con\-ven\-ti\-o\-nal optical character recognition, existing approaches and data sets.
+    \item Development of a scheme for improving a machine learning algorithm, pre-trained on labeled data, using unlabeled data.
+    \item Collecting photos of text printed in Braille.
+    \item Application of the developed scheme along with collected data to one of the existing recognition algorithms; scheme evaluation.
+\end{enumerate}
+
+In this work, a program for optical Braille recognition named "Angelina Braille Reader"\hspace{0pt}, which is written in Python3, based on Retina\-Net architecture and initially trained on 300 labeled pictures, is used and modified.
+An algorithm for correcting labels based on alignment of recognized and original text is developed and implemented in Python3.
+A data set of 1,731 photos has been created, to which the algorithm has been applied.
+Books, photos of which are included in the data set, were provided by the St. Petersburg State library for the Blind.
+Methodological advice was provided by the teachers of the St. Petersburg State Budgetary Institution "Center for Medical and Social Rehabilitation of the Visually Impaired".
+
+As shown in the experiment, correcting labels allows for additional training of the neural net on new data which leads to an improvement in the recognition of printed Braille.
+
+The developed technique may be applied to any optical Braille recognition algorithm based on machine learning.
+The alignments made in this process allow a statistical analysis of algorithm errors to be performed, which is necessary for the development of post-processing algorithms and the correction of recognized characters.
+
+\newpage
+\end{document}
