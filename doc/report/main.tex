@@ -16,6 +16,7 @@
 \usepackage{dsfont}
 
 % utilities
+\usepackage{pdfpages} % insert PDF
 \usepackage{lastpage} % reference last page: \pageref{LastPage}
 \usepackage{amsthm} % theorems with proofs
 \usepackage{mathtools} % xRightarrow, xrightleftharpoons, etc
@@ -90,6 +91,8 @@
 
 \begin{document}
 \subfile{titlepage}
+\includepdf[pages=-]{zuev_degree_work_task}
+\setcounter{page}{0}
 \subfile{parts/abstract}
 \tableofcontents
 \newpage
