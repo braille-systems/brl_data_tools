@@ -1,5 +1,11 @@
 \documentclass{main.tex}[subfiles]
 \begin{document}
+
+\counterwithout{figure}{section} % per section figure numbering off
+\setcounter{figure}{0}
+\counterwithout{table}{section}
+\setcounter{table}{0}
+
 \newpage
 \nonumsection{Приложение 1. Дополнительные иллюстрации}
 
@@ -133,11 +139,7 @@
 
 % TODO \ref{table:per_letter_errs}
 
-\newpage
-\nonumsection{Приложение 3. Исходный код программ}
-Ниже приведён исходный код программы, реализующей модифицированный алгоритм Нидлмана-Вунша. % TODO ссылка на номер алгоритма
-Этот код, а также программы, осуществляющие поиск регионов интереса, вспомогательные манипуляции с изображением (обрезка, переименование...) и текстом (замена символов, подсчёт статистик...) доступны в репозитории\footnote{\href{https://github.com/braille-systems/brl_data_tools}{github.com/braille-systems/brl\_data\_tools}}.
-Там же можно найти инструкцию по установке и запуску, а также сслыки для загрузки файлов с исходными данными (файл \texttt{README.md}).
-
-\lstinputlisting{../../scripts/needleman_wunsch.py}
+%\newpage
+%\nonumsection{Приложение 3. Исходный код программ}
+%\lstinputlisting{../../scripts/needleman_wunsch.py}
 \end{document}
