@@ -28,12 +28,13 @@ def test_find_regions():
 
 @pytest.mark.slow
 def test_find_regions_big():
+    out_dir.mkdir(parents=True, exist_ok=True)
     ref_dir = Path("../data/ref/5_for_alignment")
     queries_dir = Path("data/queries")
     bins_per_region = 4
     bin_size = (40 * 25) // bins_per_region
     ref = StringForAlignment(OneLineString(read_text(ref_dir / "scarlet_letter.txt")))
-    for k in range(10, 40, 5):
+    for k in range(2, 20, 3):
         ktuples_to_bins = build_ktuple_database(ref=ref, bin_size=bin_size, k=k)
         n_bins = len(ref.text) // bin_size + 1
 
@@ -47,4 +48,7 @@ def test_find_regions_big():
         matches_per_region = [sum(matches_per_bin[i:i + bins_per_region]) for i in range(n_bins - bins_per_region + 1)]
         plt.figure()
         plt.plot(list(range(len(matches_per_region))), matches_per_region)
+        plt.xlabel("index of char in text")
+        plt.ylabel("matches of k-tuples per 250 chars")
+        plt.title("k={}".format(k))
         plt.savefig(str(out_dir / "find_regions_k{}.png".format(k)))
